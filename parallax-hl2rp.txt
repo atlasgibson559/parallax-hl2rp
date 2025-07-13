@@ -1,0 +1,7 @@
+"parallax-hl2rp"
+{
+    "base"              "parallax"
+    "title"             "Parallax: Half-Life 2 Roleplay"
+    "author"            "Riggs"
+    "menusystem"        "1"
+}
