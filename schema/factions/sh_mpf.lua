@@ -14,7 +14,7 @@ FACTION.AllowNonAscii = true
 FACTION.Taglines = {
     "DEFENDER",
     "HERO",
-    "JURY",
+    "JURY", -- test
     "KING",
     "LINE",
     "PATROL",
