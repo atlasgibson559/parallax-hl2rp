@@ -36,3 +36,39 @@ end
 function SCHEMA:PlayerSwitchFlashlight(client, enabled)
     return client:IsCombine()
 end
+
+function SCHEMA:PlayerStartVoice(speaker)
+    local character = speaker:GetCharacter()
+    if ( !character ) then return end
+
+    local faction = character:GetFactionData()
+    if ( istable(faction) ) then
+        local sound = faction.VoiceChatBleeps && faction.VoiceChatBleeps.On -- done using sound.Add
+        if ( isstring(sound) && #sound > 0 ) then
+            local speakerTable = speaker:GetTable()
+            local nextBleep = speakerTable.axNextVoiceBleep || 0
+            if ( isnumber(nextBleep) && nextBleep > CurTime() ) then return end
+
+            speaker:EmitSound(sound, 90, 100, 1, CHAN_VOICE)
+            speakerTable.axNextVoiceBleep = CurTime() + (faction.VoiceChatBleeps.Delay || 1)
+            speakerTable.axBVoiceBleep = true
+        end
+    end
+end
+
+function SCHEMA:PlayerEndVoice(speaker)
+    local character = speaker:GetCharacter()
+    if ( !character ) then return end
+
+    local faction = character:GetFactionData()
+    if ( istable(faction) ) then
+        local sound = faction.VoiceChatBleeps && faction.VoiceChatBleeps.Off -- done using sound.Add
+        if ( isstring(sound) && #sound > 0 ) then
+            local speakerTable = speaker:GetTable()
+            if ( speakerTable.axBVoiceBleep == false ) then return end
+
+            speaker:EmitSound(sound, 90, 100, 1, CHAN_VOICE)
+            speakerTable.axBVoiceBleep = false
+        end
+    end
+end

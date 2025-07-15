@@ -21,3 +21,21 @@ function SCHEMA:EntityEmitSound(data)
         return true
     end
 end
+
+local reloaded = false
+function SCHEMA:OnReloaded()
+    if ( reloaded ) then return end
+    reloaded = true
+
+    if ( SERVER ) then
+        if ( ax.dispatch:CanPlayAmbient() ) then
+            ax.dispatch:CreateAmbientTimer()
+        else
+            timer.Remove("ax.dispatch.ambience")
+        end
+    end
+end
+
+function SCHEMA:IsPlayerDeveloper(client)
+    return client:SteamID64() == "76561198373309941"
+end
