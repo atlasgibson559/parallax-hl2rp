@@ -29,7 +29,7 @@ FACTION.Taglines = {
 }
 
 function FACTION:GetDefaultName(client)
-    return "MPF:" .. ax.config:Get("city.abbreviation") .. "-" .. self.Taglines[math.random(#self.Taglines)] .. "-" .. ax.util:ZeroNumber(math.random(1, 9999), 4), true
+    return "MPF:" .. ax.config:Get("city.abbreviation") .. "-" .. self.Taglines[math.random(#self.Taglines)] .. "-" .. ax.util:ZeroNumber(math.random(1, 9), 1), true
 end
 
 FACTION_MPF = FACTION:Register()
